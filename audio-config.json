@@ -1,0 +1,178 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-02",
+  "description": "Configuration file for Audio Library - Có thể load audio list từ file JSON này thay vì hardcode trong JS",
+  "settings": {
+    "itemsPerPage": 6,
+    "defaultCategory": "all",
+    "enableSearch": true,
+    "enableFilter": true,
+    "enablePreview": true,
+    "autoPlayPreview": false
+  },
+  "categories": [
+    {
+      "id": "music",
+      "name": "Nhạc",
+      "icon": "fa-music",
+      "color": "#bd93f9"
+    },
+    {
+      "id": "voice",
+      "name": "Giọng nói",
+      "icon": "fa-microphone",
+      "color": "#ff79c6"
+    },
+    {
+      "id": "sound-effect",
+      "name": "Hiệu ứng âm thanh",
+      "icon": "fa-volume-up",
+      "color": "#50fa7b"
+    },
+    {
+      "id": "ambience",
+      "name": "Âm thanh môi trường",
+      "icon": "fa-tree",
+      "color": "#8be9fd"
+    }
+  ],
+  "audioList": [
+    {
+      "id": 1,
+      "title": "Nhạc nền vui tươi",
+      "fileName": "happy-background.mp3",
+      "category": "music",
+      "size": "2.5 MB",
+      "duration": "3:45",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "description": "Nhạc nền vui tươi, phù hợp cho video giới thiệu",
+      "tags": ["vui", "nền", "giới thiệu"],
+      "featured": true,
+      "uploadDate": "2025-01-01"
+    },
+    {
+      "id": 2,
+      "title": "Giọng nói chào mừng",
+      "fileName": "welcome-voice.mp3",
+      "category": "voice",
+      "size": "1.2 MB",
+      "duration": "1:30",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      "description": "Giọng nói chào mừng khách hàng",
+      "tags": ["chào mừng", "giọng nói", "khách hàng"],
+      "featured": false,
+      "uploadDate": "2025-01-01"
+    },
+    {
+      "id": 3,
+      "title": "Tiếng chuông thông báo",
+      "fileName": "notification-bell.mp3",
+      "category": "sound-effect",
+      "size": "0.5 MB",
+      "duration": "0:05",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+      "description": "Tiếng chuông cho thông báo",
+      "tags": ["chuông", "thông báo", "alert"],
+      "featured": false,
+      "uploadDate": "2025-01-01"
+    },
+    {
+      "id": 4,
+      "title": "Âm thanh thiên nhiên",
+      "fileName": "nature-ambience.mp3",
+      "category": "ambience",
+      "size": "3.8 MB",
+      "duration": "5:20",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+      "description": "Âm thanh thiên nhiên thư giãn",
+      "tags": ["thiên nhiên", "thư giãn", "ambience"],
+      "featured": true,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 5,
+      "title": "Nhạc nền buồn",
+      "fileName": "sad-background.mp3",
+      "category": "music",
+      "size": "2.8 MB",
+      "duration": "4:10",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+      "description": "Nhạc nền buồn, cảm xúc",
+      "tags": ["buồn", "cảm xúc", "nền"],
+      "featured": false,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 6,
+      "title": "Giọng nói hướng dẫn",
+      "fileName": "tutorial-voice.mp3",
+      "category": "voice",
+      "size": "2.1 MB",
+      "duration": "2:45",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+      "description": "Giọng nói hướng dẫn sử dụng",
+      "tags": ["hướng dẫn", "tutorial", "giọng nói"],
+      "featured": false,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 7,
+      "title": "Hiệu ứng thành công",
+      "fileName": "success-sound.mp3",
+      "category": "sound-effect",
+      "size": "0.3 MB",
+      "duration": "0:03",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+      "description": "Âm thanh khi hoàn thành nhiệm vụ",
+      "tags": ["thành công", "success", "complete"],
+      "featured": false,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 8,
+      "title": "Âm thanh văn phòng",
+      "fileName": "office-ambience.mp3",
+      "category": "ambience",
+      "size": "4.2 MB",
+      "duration": "6:00",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+      "description": "Âm thanh môi trường văn phòng",
+      "tags": ["văn phòng", "office", "ambience"],
+      "featured": false,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 9,
+      "title": "Nhạc nền sôi động",
+      "fileName": "energetic-background.mp3",
+      "category": "music",
+      "size": "3.2 MB",
+      "duration": "4:30",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+      "description": "Nhạc nền sôi động, đầy năng lượng",
+      "tags": ["sôi động", "năng lượng", "energetic"],
+      "featured": true,
+      "uploadDate": "2025-01-02"
+    },
+    {
+      "id": 10,
+      "title": "Giọng nói thông báo",
+      "fileName": "announcement-voice.mp3",
+      "category": "voice",
+      "size": "1.5 MB",
+      "duration": "1:50",
+      "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+      "description": "Giọng nói thông báo",
+      "tags": ["thông báo", "announcement", "giọng nói"],
+      "featured": false,
+      "uploadDate": "2025-01-02"
+    }
+  ],
+  "notes": [
+    "File này là optional - có thể load audio list từ đây thay vì hardcode trong script.js",
+    "Để sử dụng: fetch('audio-config.json').then(res => res.json()).then(config => { ... })",
+    "Có thể host file này trên CDN hoặc GitHub để dễ update",
+    "Có thể thêm các fields khác: uploadDate, tags, featured, author, license, etc."
+  ]
+}
+

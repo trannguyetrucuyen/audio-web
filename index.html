@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Kho Âm Thanh Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <i class="fas fa-music"></i>
+                Kho Âm Thanh Online
+            </h1>
+            <p class="subtitle">Chọn và sử dụng âm thanh cho công cụ của bạn</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Search & Filter -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Tìm kiếm âm thanh..." />
+                </div>
+                
+                <div class="filter-group">
+                    <label for="category-filter">
+                        <i class="fas fa-filter"></i>
+                        Thể loại:
+                    </label>
+                    <select id="category-filter">
+                        <option value="all">Tất cả</option>
+                        <option value="music">Nhạc</option>
+                        <option value="voice">Giọng nói</option>
+                        <option value="sound-effect">Hiệu ứng âm thanh</option>
+                        <option value="ambience">Âm thanh môi trường</option>
+                    </select>
+                </div>
+
+                <button id="refresh-btn" class="btn btn-secondary" title="Làm mới danh sách">
+                    <i class="fas fa-sync-alt"></i>
+                    Làm mới
+                </button>
+            </div>
+
+            <!-- Audio List -->
+            <div id="audio-list" class="audio-list">
+                <!-- Audio items will be dynamically inserted here -->
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Đang tải danh sách âm thanh...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Kho Âm Thanh Online. Made with <i class="fas fa-heart"></i> by Your Team</p>
+            <div class="footer-links">
+                <a href="#" title="Hướng dẫn sử dụng"><i class="fas fa-question-circle"></i> Hướng dẫn</a>
+                <a href="#" title="Liên hệ hỗ trợ"><i class="fas fa-envelope"></i> Liên hệ</a>
+                <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Player Modal (for preview) -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="preview-title">Preview Audio</h3>
+                <button class="close-btn" id="close-preview-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <audio id="preview-audio" controls>
+                    <source id="preview-source" src="" type="audio/mpeg">
+                    Trình duyệt của bạn không hỗ trợ audio player.
+                </audio>
+                <div class="preview-info">
+                    <p><strong>Tên file:</strong> <span id="preview-filename"></span></p>
+                    <p><strong>Thể loại:</strong> <span id="preview-category"></span></p>
+                    <p><strong>Kích thước:</strong> <span id="preview-size"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-preview-btn">Đóng</button>
+                <button class="btn btn-primary" id="use-from-preview-btn">
+                    <i class="fas fa-check"></i>
+                    Sử dụng file này
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Thông báo</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
+
