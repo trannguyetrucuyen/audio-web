@@ -146,8 +146,12 @@ const toastMessage = document.getElementById('toast-message');
 // INITIALIZATION
 // ================================
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     console.log('🎵 Audio Library Web App initialized');
+    
+    // Try to load from Appwrite if configured
+    await loadAudioFromAppwrite();
+    
     renderAudioList();
     setupEventListeners();
 });
@@ -171,6 +175,18 @@ function setupEventListeners() {
     cancelPreviewBtn.addEventListener('click', closePreview);
     useFromPreviewBtn.addEventListener('click', useAudioFromPreview);
     
+    // Upload Modal
+    const uploadBtn = document.getElementById('upload-btn');
+    const uploadModal = document.getElementById('upload-modal');
+    const closeUploadBtn = document.getElementById('close-upload-btn');
+    const cancelUploadBtn = document.getElementById('cancel-upload-btn');
+    const submitUploadBtn = document.getElementById('submit-upload-btn');
+    
+    if (uploadBtn) uploadBtn.addEventListener('click', openUploadModal);
+    if (closeUploadBtn) closeUploadBtn.addEventListener('click', closeUploadModal);
+    if (cancelUploadBtn) cancelUploadBtn.addEventListener('click', closeUploadModal);
+    if (submitUploadBtn) submitUploadBtn.addEventListener('click', handleUpload);
+    
     // Close modal on background click
     previewModal.addEventListener('click', function(e) {
         if (e.target === previewModal) {
@@ -178,10 +194,23 @@ function setupEventListeners() {
         }
     });
     
+    if (uploadModal) {
+        uploadModal.addEventListener('click', function(e) {
+            if (e.target === uploadModal) {
+                closeUploadModal();
+            }
+        });
+    }
+    
     // Close modal on Escape key
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && previewModal.classList.contains('show')) {
-            closePreview();
+        if (e.key === 'Escape') {
+            if (previewModal.classList.contains('show')) {
+                closePreview();
+            }
+            if (uploadModal && uploadModal.classList.contains('show')) {
+                closeUploadModal();
+            }
         }
     });
 }
@@ -529,6 +558,148 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 3000);
+}
+
+// ================================
+// UPLOAD FUNCTIONS (APPWRITE)
+// ================================
+
+function openUploadModal() {
+    const uploadModal = document.getElementById('upload-modal');
+    uploadModal.classList.add('show');
+    // Reset form
+    document.getElementById('admin-password').value = '';
+    document.getElementById('audio-file').value = '';
+    document.getElementById('audio-title').value = '';
+    document.getElementById('audio-description').value = '';
+    document.getElementById('upload-progress').style.display = 'none';
+}
+
+function closeUploadModal() {
+    const uploadModal = document.getElementById('upload-modal');
+    uploadModal.classList.remove('show');
+}
+
+async function handleUpload() {
+    const password = document.getElementById('admin-password').value;
+    const fileInput = document.getElementById('audio-file');
+    const title = document.getElementById('audio-title').value;
+    const category = document.getElementById('audio-category').value;
+    const description = document.getElementById('audio-description').value;
+    
+    // Validation
+    if (!password) {
+        showToast('Vui lòng nhập mật khẩu!', 'error');
+        return;
+    }
+    
+    if (!fileInput.files || fileInput.files.length === 0) {
+        showToast('Vui lòng chọn file audio!', 'error');
+        return;
+    }
+    
+    if (!title.trim()) {
+        showToast('Vui lòng nhập tiêu đề!', 'error');
+        return;
+    }
+    
+    // Check if Appwrite is configured
+    if (typeof window.AppwriteService === 'undefined') {
+        showToast('Appwrite chưa được cấu hình! Xem file APPWRITE_QUICK_SETUP.md', 'error');
+        return;
+    }
+    
+    const file = fileInput.files[0];
+    const submitBtn = document.getElementById('submit-upload-btn');
+    
+    // Show progress
+    document.getElementById('upload-progress').style.display = 'block';
+    document.getElementById('progress-fill').style.width = '0%';
+    document.getElementById('upload-status').textContent = 'Đang xác thực...';
+    submitBtn.disabled = true;
+    
+    try {
+        // Verify password
+        const isValid = await window.AppwriteService.verifyAdminPassword(password);
+        if (!isValid) {
+            showToast('Mật khẩu không đúng!', 'error');
+            document.getElementById('upload-progress').style.display = 'none';
+            submitBtn.disabled = false;
+            return;
+        }
+        
+        // Get duration
+        document.getElementById('progress-fill').style.width = '20%';
+        document.getElementById('upload-status').textContent = 'Đang tính thời lượng...';
+        const duration = await window.AppwriteService.getAudioDuration(file);
+        
+        // Upload
+        document.getElementById('progress-fill').style.width = '40%';
+        document.getElementById('upload-status').textContent = 'Đang upload...';
+        
+        await window.AppwriteService.uploadAudioFile(file, {
+            title: title.trim(),
+            category: category,
+            description: description.trim(),
+            duration: duration
+        });
+        
+        // Success
+        document.getElementById('progress-fill').style.width = '100%';
+        document.getElementById('upload-status').textContent = 'Hoàn thành!';
+        
+        showToast('Upload thành công!', 'success');
+        
+        // Reload and close
+        setTimeout(async () => {
+            await loadAudioFromAppwrite();
+            closeUploadModal();
+            submitBtn.disabled = false;
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Upload error:', error);
+        showToast('Upload thất bại: ' + (error.message || 'Lỗi không xác định'), 'error');
+        document.getElementById('upload-progress').style.display = 'none';
+        submitBtn.disabled = false;
+    }
+}
+
+async function loadAudioFromAppwrite() {
+    try {
+        if (typeof window.AppwriteService === 'undefined') {
+            console.log('ℹ️ Appwrite not configured, using static data');
+            return;
+        }
+        
+        const appwriteAudios = await window.AppwriteService.fetchAudioLibrary();
+        
+        if (appwriteAudios && appwriteAudios.length > 0) {
+            // Transform to match our format
+            const transformed = appwriteAudios.map(doc => ({
+                id: doc.$id,
+                title: doc.title,
+                fileName: doc.fileName,
+                category: doc.category,
+                size: doc.size,
+                duration: doc.duration,
+                url: doc.url,
+                description: doc.description || '',
+                fileId: doc.fileId
+            }));
+            
+            // Merge with static data
+            currentAudioList = [...transformed, ...AUDIO_LIBRARY];
+            
+            console.log(`✅ Loaded ${transformed.length} files from Appwrite`);
+            
+            // Re-render
+            currentPage = 1;
+            renderAudioList();
+        }
+    } catch (error) {
+        console.error('Failed to load from Appwrite:', error);
+    }
 }
 
 // ================================

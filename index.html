@@ -6,6 +6,8 @@
     <title>🎵 Kho Âm Thanh Online</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Appwrite SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
 </head>
 <body>
     <!-- Header -->
@@ -46,6 +48,11 @@
                 <button id="refresh-btn" class="btn btn-secondary" title="Làm mới danh sách">
                     <i class="fas fa-sync-alt"></i>
                     Làm mới
+                </button>
+
+                <button id="upload-btn" class="btn btn-primary" title="Upload âm thanh mới">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Upload Audio
                 </button>
             </div>
 
@@ -111,7 +118,85 @@
         <span id="toast-message">Thông báo</span>
     </div>
 
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📤 Upload Audio File</h3>
+                <button class="close-btn" id="close-upload-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Password Section -->
+                <div class="form-group">
+                    <label for="admin-password">
+                        <i class="fas fa-lock"></i>
+                        Mật khẩu Admin
+                    </label>
+                    <input type="password" id="admin-password" placeholder="Nhập mật khẩu để upload" required>
+                    <small>Mật khẩu mặc định: admin123</small>
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group">
+                    <label for="audio-file">
+                        <i class="fas fa-file-audio"></i>
+                        Chọn file audio
+                    </label>
+                    <input type="file" id="audio-file" accept=".mp3,.wav,.m4a,.ogg" required>
+                </div>
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="audio-title">
+                        <i class="fas fa-heading"></i>
+                        Tiêu đề
+                    </label>
+                    <input type="text" id="audio-title" placeholder="VD: Nhạc nền vui tươi" required>
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                    <label for="audio-category">
+                        <i class="fas fa-tags"></i>
+                        Thể loại
+                    </label>
+                    <select id="audio-category" required>
+                        <option value="music">🎵 Nhạc nền</option>
+                        <option value="voice">🎙️ Giọng nói</option>
+                        <option value="sound-effect">⚡ Hiệu ứng</option>
+                        <option value="ambience">🌊 Môi trường</option>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="audio-description">
+                        <i class="fas fa-align-left"></i>
+                        Mô tả (tùy chọn)
+                    </label>
+                    <textarea id="audio-description" rows="3" placeholder="Mô tả ngắn về file audio..."></textarea>
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="upload-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p id="upload-status">Đang upload...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-upload-btn">Hủy</button>
+                <button class="btn btn-primary" id="submit-upload-btn">
+                    <i class="fas fa-upload"></i>
+                    Upload
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
+    <script src="appwrite-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
