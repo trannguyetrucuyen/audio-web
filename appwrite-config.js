@@ -5,10 +5,10 @@
 // Appwrite SDK
 const APPWRITE_CONFIG = {
     endpoint: 'https://cloud.appwrite.io/v1',
-    projectId: 'YOUR_PROJECT_ID', // Thay bằng Project ID của bạn
-    databaseId: 'audio-library-db',
+    projectId: '6905b32c00025b5baa97',
+    databaseId: '690ad1160008e97db4f5',
     collectionId: 'audio-files',
-    bucketId: 'audio-storage'
+    bucketId: '690ad36b0012a8035cfd'
 };
 
 // Admin password hash (SHA-256)
